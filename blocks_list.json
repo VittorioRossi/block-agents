@@ -1,0 +1,134 @@
+{
+  "input_file": {
+    "required_inputs": [
+      "file_path"
+    ],
+    "optional_inputs": [],
+    "description": "Block for reading and parsing files.\n    \n    This block allows users to read files of various formats:\n    - Text files\n    - JSON files\n    - CSV files\n    - YAML files"
+  },
+  "file_writer": {
+    "required_inputs": [
+      "file_path"
+    ],
+    "optional_inputs": [
+      "data",
+      "text"
+    ],
+    "description": "Block for writing data to files.\n    \n    This block allows users to write data to files in various formats:\n    - Text files\n    - JSON files\n    - CSV files\n    - YAML files"
+  },
+  "text_input": {
+    "required_inputs": [],
+    "optional_inputs": [
+      "text"
+    ],
+    "description": "Block for providing text input to a pipeline.\n\n    This block allows users to provide text input that can be used by other blocks in the pipeline."
+  },
+  "text_formatter": {
+    "required_inputs": [
+      "text"
+    ],
+    "optional_inputs": [],
+    "description": "Block for formatting text.\n\n    This block allows users to format text in various ways, such as:\n    - Converting to uppercase or lowercase\n    - Trimming whitespace\n    - Adding prefixes or suffixes\n    - Replacing text"
+  },
+  "text_joiner": {
+    "required_inputs": [],
+    "optional_inputs": [],
+    "description": "Block for joining multiple text inputs.\n\n    This block allows users to join multiple text inputs into a single text output,\n    with optional separators, prefixes, and suffixes."
+  },
+  "llm": {
+    "required_inputs": [
+      "prompt"
+    ],
+    "optional_inputs": [],
+    "description": "Block for using language models to generate text.\n\n    This block allows users to send prompts to language models and receive generated text.\n    It supports various LLM providers and models."
+  },
+  "output_generator": {
+    "required_inputs": [
+      "text"
+    ],
+    "optional_inputs": [],
+    "description": "Block for generating formatted output.\n\n    This block allows users to format the output of a pipeline in various formats:\n    - Markdown\n    - HTML\n    - DOCX\n    - Plain text"
+  },
+  "chunker": {
+    "required_inputs": [
+      "text"
+    ],
+    "optional_inputs": [
+      "chunk_overlap",
+      "split_by",
+      "chunk_size"
+    ],
+    "description": "Block for splitting text into manageable chunks.\n    \n    This block splits long text content into smaller chunks that can be\n    processed by LLMs or other blocks with text size limitations."
+  },
+  "slicer": {
+    "required_inputs": [
+      "text"
+    ],
+    "optional_inputs": [
+      "slice_overlap",
+      "slice_size",
+      "metadata",
+      "method"
+    ],
+    "description": "Block for chunking and organizing text for retrieval.\n    \n    This block extends chunking with more advanced processing for RAG applications.\n    It handles chunk creation, overlap, and metadata management for effective retrieval."
+  },
+  "repeater": {
+    "required_inputs": [
+      "items"
+    ],
+    "optional_inputs": [],
+    "description": "Block for repeating operations over collections of data.\n    \n    This block allows users to iterate over a list of items and apply the same\n    pipeline operations to each item in the list, collecting the results."
+  },
+  "batch_processor": {
+    "required_inputs": [
+      "items"
+    ],
+    "optional_inputs": [
+      "batch_size"
+    ],
+    "description": "Block for processing data in batches.\n    \n    This block is a specialized version of the repeater that processes data in batches\n    rather than individual items, which can be more efficient for certain operations."
+  },
+  "python_script": {
+    "required_inputs": [
+      "script"
+    ],
+    "optional_inputs": [
+      "script",
+      "script_file"
+    ],
+    "description": "Block for executing Python scripts.\n    \n    This block allows users to execute Python code either provided directly as a string\n    or from a file, with input data provided as variables to the script."
+  },
+  "c_script": {
+    "required_inputs": [
+      "script"
+    ],
+    "optional_inputs": [
+      "script",
+      "script_file",
+      "args"
+    ],
+    "description": "Block for executing C scripts.\n    \n    This block allows users to compile and execute C code either provided directly as a string\n    or from a file, with input data provided as command-line arguments."
+  },
+  "json_validator": {
+    "required_inputs": [
+      "data"
+    ],
+    "optional_inputs": [
+      "schema"
+    ],
+    "description": "Block for validating JSON data against a schema.\n    \n    This block allows users to validate JSON data against a schema to ensure\n    data conforms to the expected structure."
+  },
+  "json_transformer": {
+    "required_inputs": [
+      "data"
+    ],
+    "optional_inputs": [
+      "transform",
+      "select",
+      "filter",
+      "rename",
+      "flatten"
+    ],
+    "description": "Block for transforming JSON data.\n    \n    This block allows users to transform JSON data using various operations:\n    - Selecting specific fields\n    - Renaming fields\n    - Applying transformations to field values\n    - Filtering arrays\n    - Flattening nested structures"
+  }
+}

@@ -6,7 +6,6 @@ import os
 from typing import Any, Dict, List, Optional, Set
 
 import yaml
-from fastavro import reader as avro_reader
 
 from block_agents.core.block import Block
 from block_agents.core.context import Context
@@ -23,7 +22,6 @@ class InputFileBlock(Block):
     - JSON files
     - CSV files
     - YAML files
-    - AVRO files
     """
 
     def __init__(self, block_id: str, config: Dict[str, Any]):
@@ -37,7 +35,7 @@ class InputFileBlock(Block):
         
         # Get file options from config
         self.file_path = config.get("file_path", "")
-        self.file_format = config.get("file_format", "auto")  # auto, text, json, csv, yaml, avro
+        self.file_format = config.get("file_format", "auto")  # auto, text, json, csv, yaml
         self.encoding = config.get("encoding", "utf-8")
         self.csv_options = config.get("csv_options", {})
         
@@ -74,9 +72,6 @@ class InputFileBlock(Block):
             result = {"data": content}
         elif file_format == "yaml":
             content = self._read_yaml_file(file_path)
-            result = {"data": content}
-        elif file_format == "avro":
-            content = self._read_avro_file(file_path)
             result = {"data": content}
         else:
             # Default to text
@@ -154,8 +149,6 @@ class InputFileBlock(Block):
             return "csv"
         elif ext in (".yaml", ".yml"):
             return "yaml"
-        elif ext == ".avro":
-            return "avro"
         else:
             return "text"
             
@@ -217,18 +210,7 @@ class InputFileBlock(Block):
         """
         with open(file_path, encoding=self.encoding) as f:
             return yaml.safe_load(f)
-            
-    def _read_avro_file(self, file_path: str) -> List[Dict[str, Any]]:
-        """Read an AVRO file.
 
-        Args:
-            file_path: Path to the file
-
-        Returns:
-            List of records from the AVRO file
-        """
-        with open(file_path, "rb") as f:
-            return list(avro_reader(f))
 
 
 @register_block("file_writer")

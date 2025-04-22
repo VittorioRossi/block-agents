@@ -128,3 +128,6 @@ examples/*.tmp
 
 .ruff_cache
 secret/
+
+uv.*
+uv

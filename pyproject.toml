@@ -44,7 +44,6 @@ dev = [
 ]
 
 [tool.uv]
-exclude = []
 index-url = "https://pypi.org/simple"
 
 [tool.black]
