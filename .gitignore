@@ -60,7 +60,6 @@ dmypy.json
 
 # dotenv
 .env
-.env.*
 
 # Devcontainer
 .devcontainer/.env
@@ -128,4 +127,4 @@ examples/*.tmp
 .devcontainer
 
 .ruff_cache
-
+secret/
