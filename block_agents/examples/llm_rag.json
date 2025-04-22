@@ -1,0 +1,60 @@
+{
+  "pipeline_id": "pandoc_table_extraction",
+  "name": "Pandoc Tables Extraction",
+  "description": "Extract paragraphs related to table formatting from Pandoc documentation",
+  "stream_config": {
+    "enabled": true,
+    "log_level": "info"
+  },
+  "blocks": [
+    {
+      "id": "input_file",
+      "type": "input_file",
+      "config": {
+        "file_path": "./pandoc.md"
+      },
+      "next": ["chunker"]
+    },
+    {
+      "id": "chunker",
+      "type": "chunker",
+      "config": {
+        "mode": "paragraph",
+        "chunk_title_min": 100,
+        "chunk_min": 200,
+        "chunk_max": 2000,
+        "label": true,
+        "label_format": "<%d>",
+        "label_start": 0
+      },
+      "next": ["llm_process"]
+    },
+    {
+      "id": "prompt_text",
+      "type": "text_input",
+      "config": {
+        "default_text": "The text below is the documentation of Pandoc. In it, find all paragraphs that relate to the formatting of tables in markdown.\n\nEach paragraph starts with an identifier annotation, like <0> for the first paragraph, <1> for the next, and so on.\n\nAnswer only with a JSON-formatted list of identifiers."
+      },
+      "next": ["llm_process"]
+    },
+    {
+      "id": "llm_process",
+      "type": "llm",
+      "config": {
+        "input_separator": "\n\n",
+        "chunk_separator": "\n\n"
+      },
+      "next": ["output_file"]
+    },
+    {
+      "id": "output_file",
+      "type": "output_generator",
+      "config": {
+        "format": "markdown",
+        "output_path": "tables_in_pandoc.md"
+      },
+      "next": []
+    }
+  ],
+  "output": "output_file"
+}

@@ -1,0 +1,124 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# dotenv
+.env
+.env.*
+
+# Devcontainer
+.devcontainer/.env
+
+# Logs
+*.log
+
+# System files
+Thumbs.db
+Desktop.ini
+
+# Sphinx documentation
+docs/_build/
+
+# Local data
+*.sqlite3
+
+# Pandoc
+*.pdf
+*.docx
+*.epub
+*.odt
+*.pptx
+*.zip
+
+# Ignore test output
+*.tmp
+*.out
+*.test
+
+# Ignore coverage
+.coverage
+
+# Ignore wheel files
+*.whl
+
+# Ignore pipenv
+Pipfile.lock
+
+# Ignore poetry
+poetry.lock
+
+# Ignore hatch
+.hatch/
+
+# Ignore uv
+.uv/
+
+# Ignore pre-commit
+.pre-commit-config.yaml
+.pre-commit-hooks.yaml
+
+# Ignore backup files
+*~
+*.bak
+*.swp
+*.swo
+*.orig
+
+# Ignore examples
+examples/*.out
+examples/*.tmp

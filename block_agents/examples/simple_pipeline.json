@@ -1,0 +1,42 @@
+{
+  "pipeline_id": "simple_pipeline",
+  "name": "Simple Text Processing",
+  "description": "A basic pipeline to process text with an LLM",
+  "stream_config": {
+    "enabled": true,
+    "log_level": "info",
+    "include_block_types": ["llm", "text_input", "output_generator"],
+    "throttle_ms": 100
+  },
+  "blocks": [
+    {
+      "id": "input",
+      "type": "text_input",
+      "config": {
+        "default_text": "Analyze the market trends for renewable energy"
+      },
+      "next": ["llm_process"]
+    },
+    {
+      "id": "llm_process",
+      "type": "llm",
+      "config": {
+        "provider": "openai",
+        "model": "gpt-3.5-turbo",
+        "temperature": 0.7,
+        "system_message": "You are a helpful assistant that specializes in economic analysis."
+      },
+      "next": ["output"]
+    },
+    {
+      "id": "output",
+      "type": "output_generator",
+      "config": {
+        "format": "markdown",
+        "title": "Market Analysis Report"
+      },
+      "next": []
+    }
+  ],
+  "output": "output"
+}

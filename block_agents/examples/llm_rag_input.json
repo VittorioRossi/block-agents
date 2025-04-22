@@ -1,0 +1,11 @@
+{
+  "pipeline_id": "pandoc_table_extraction",
+  "input_values": {
+    "input": {
+      "text": "Analyze the market trends for renewable energy in Europe for the next 5 years."
+    },
+    "global_parameters": {
+      "user_id": "user123"
+    }
+  }
+}
