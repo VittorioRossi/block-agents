@@ -1,6 +1,7 @@
 """File handling blocks for the block-based agentic pipeline system."""
 
 import csv
+import hashlib
 import json
 import os
 from typing import Any, Dict, List, Optional, Set
@@ -38,6 +39,26 @@ class InputFileBlock(Block):
         self.file_format = config.get("file_format", "auto")  # auto, text, json, csv, yaml
         self.encoding = config.get("encoding", "utf-8")
         self.csv_options = config.get("csv_options", {})
+
+    def get_uploaded_file_path(self, digest: str) -> Optional[str]:
+        """Find the path to an uploaded file by its SHA256 digest.
+
+        Args:
+            digest: SHA256 hex digest of the file
+
+        Returns:
+            Absolute path to the file if found, else None
+        """
+        upload_dir = self.config.get("storage", '')
+
+        for fname in os.listdir(upload_dir):
+            fpath = os.path.join(upload_dir, fname)
+            if os.path.isfile(fpath):
+                with open(fpath, "rb") as f:
+                    file_digest = hashlib.sha256(f.read()).hexdigest()
+                if file_digest == digest:
+                    return os.path.abspath(fpath)
+        return None
         
     def process(self, inputs: Dict[str, Any], context: Context) -> Dict[str, Any]:
         """Process the inputs and produce an output.
@@ -50,7 +71,13 @@ class InputFileBlock(Block):
             Dictionary containing the file content
         """
         # Get file path from inputs or config
-        file_path = inputs.get("file_path", self.file_path)
+        file_path = self.get_uploaded_file_path(inputs.get("digest", self.file_path))
+        if not file_path:
+            raise InputValidationError(
+                "File path not provided in inputs or config",
+                block_id=self.id,
+            )
+
         
         # Determine format if auto
         file_format = self.file_format

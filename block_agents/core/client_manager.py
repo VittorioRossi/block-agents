@@ -1,7 +1,7 @@
 """LLM client manager for the block-based agentic pipeline system."""
 
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, Optional
 
 from block_agents.core.config import Config
 from block_agents.core.errors import ConfigurationError, LLMProviderError
@@ -38,7 +38,7 @@ class BaseLLMClient(ABC):
         self.config = config
         self.provider = provider
         self.default_model = config.get(f"llm.providers.{provider}.default_model")
-        self.timeout_seconds = config.get(f"llm.providers.{provider}.timeout_seconds", 60)
+        self.timeout_seconds = config.get(f"llm.providers.{provider}.timeout_seconds", 60)  # noqa: E501
 
         # Get API key
         self.api_key = config.get_api_key(provider)

@@ -167,6 +167,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", "-c", help="Path to the configuration file")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging")
     
+    
     args = parser.parse_args()
     
     # Run the pipeline

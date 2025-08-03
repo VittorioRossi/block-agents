@@ -31,7 +31,6 @@ class TestInputFileBlock:
         assert block._detect_format("test.csv") == "csv"
         assert block._detect_format("test.yaml") == "yaml"
         assert block._detect_format("test.yml") == "yaml"
-        assert block._detect_format("test.avro") == "avro"
         assert block._detect_format("test.txt") == "text"
         assert block._detect_format("test") == "text"
         

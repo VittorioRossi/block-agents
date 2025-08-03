@@ -1,11 +1,13 @@
+
 """Pipeline execution engine for the block-based agentic pipeline system."""
 
-import concurrent.futures
+import hashlib
 import json
+import os
 import threading
 import time
 import uuid
-from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Set
 
 from block_agents.core.block import Block, BlockFactory
 from block_agents.core.client_manager import LLMClientManager
@@ -94,7 +96,7 @@ class Pipeline:
                 raise PipelineDefinitionError(
                     f"Error creating block {block_id} of type {block_type}: {e}",
                     block_id=block_id,
-                )
+                ) from e
                 
         # Build block dependency graph
         self.block_dependencies: Dict[str, List[str]] = {}
@@ -335,7 +337,7 @@ class Pipeline:
                 raise PipelineRuntimeError(
                     f"Pipeline execution error: {e}",
                     details={"error_type": e.__class__.__name__},
-                )
+                ) from e
             raise
 
     def _execute_block(
@@ -388,7 +390,7 @@ class Pipeline:
                     f"Error executing block {block_id}: {e}",
                     block_id=block_id,
                     details={"error_type": e.__class__.__name__},
-                )
+                ) from e 
             raise
 
     def _find_next_executable_block(
@@ -478,9 +480,56 @@ class Pipeline:
             pipeline_def = json.loads(json_str)
             return cls(pipeline_def, config)
         except json.JSONDecodeError as e:
-            raise PipelineDefinitionError(f"Invalid JSON: {e}")
+            raise PipelineDefinitionError(f"Invalid JSON: {e}") from e
         except Exception as e:
-            raise PipelineDefinitionError(f"Error creating pipeline: {e}")
+            raise PipelineDefinitionError(f"Error creating pipeline: {e}") from e
+
+    @classmethod
+    def from_frontend_json(cls, json_str: str, config: Optional[Config] = None) -> "Pipeline":
+        """Create a Pipeline from a frontend workflow JSON string.
+
+        Args:
+            json_str: JSON string containing the frontend workflow definition
+            config: Configuration instance
+
+        Returns:
+            A new Pipeline instance
+
+        Raises:
+            PipelineDefinitionError: If the frontend workflow definition is invalid
+        """
+        from block_agents.parsers import FrontendParser
+        
+        try:
+            frontend_data = json.loads(json_str)
+            pipeline_def = FrontendParser.parse(frontend_data)
+            return cls(pipeline_def, config)
+        except json.JSONDecodeError as e:
+            raise PipelineDefinitionError(f"Invalid JSON: {e}") from e 
+        except Exception as e:
+            raise PipelineDefinitionError(f"Error creating pipeline from frontend data: {e}") from e
+
+    @classmethod
+    def from_frontend_dict(cls, frontend_data: Dict[str, Any], config: Optional[Config] = None) -> "Pipeline":
+        """Create a Pipeline from a frontend workflow dictionary.
+
+        Args:
+            frontend_data: Dictionary containing the frontend workflow definition
+            config: Configuration instance
+
+        Returns:
+            A new Pipeline instance
+
+        Raises:
+            PipelineDefinitionError: If the frontend workflow definition is invalid
+        """
+        from block_agents.parsers import FrontendParser
+        
+        try:
+            pipeline_def = FrontendParser.parse(frontend_data)
+            return cls(pipeline_def, config)
+        except Exception as e:
+            raise PipelineDefinitionError(f"Error creating pipeline from frontend data: {e}") from e 
 
     def to_json(self) -> str:
         """Convert the pipeline definition to a JSON string.

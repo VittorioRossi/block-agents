@@ -1,0 +1,82 @@
+{
+  "name": "Untitled Workflow",
+  "definition": {
+    "nodes": [
+      {
+        "id": "inputNode_1751799680616",
+        "title": "inputNode",
+        "node_type": "inputNode",
+        "config": {
+          "type": "inputNode",
+          "input_fields": {
+            "inputText": {
+              "type": "string",
+              "value": ""
+            },
+            "inputFile1": {
+              "type": "file",
+              "value": "message.txt",
+              "digest": "d8684972f60d2d3530c286fbcd3f92a29509c74a3bdd7d4c31de2b7698edb3e1"
+            },
+            "inputFile2": {
+              "type": "file",
+              "value": "Operating Systems - Three Easy Pieces.pdf",
+              "digest": "8f3fc8a97699d0417ea764a6508c7c5c7dbbd5dbbb046652ba6f05da3dea659b"
+            }
+          },
+          "title": "inputNode"
+        },
+        "coordinates": {
+          "x": 649.3033691341486,
+          "y": 195.16076367092342
+        }
+      },
+      {
+        "id": "llmNode_1751817660271",
+        "title": "llmNode",
+        "node_type": "llmNode",
+        "config": {
+          "type": "llmNode",
+          "llm_info": {
+            "model": "openai/gpt-4",
+            "temperature": 0,
+            "max_tokens": 9500
+          },
+          "system_message": "",
+          "user_message": "",
+          "title": "llmNode",
+          "input_key":"text"
+        },
+        "coordinates": {
+          "x": 1080.037391064766,
+          "y": 158.7660018572509
+        }
+      },
+      {
+        "id": "codeNode_1751817666566",
+        "title": "codeNode",
+        "node_type": "codeNode",
+        "config": {
+          "type": "codeNode",
+          "code": "import os\n\ndef python_func():\n  pass",
+          "title": "codeNode"
+        },
+        "coordinates": {
+          "x": 1537.457218504314,
+          "y": 170.81949277917045
+        }
+      }
+    ],
+    "links": [
+      {
+        "source_id": "inputNode_1751799680616",
+        "target_id": "llmNode_1751817660271"
+      },
+      {
+        "source_id": "llmNode_1751817660271",
+        "target_id": "codeNode_1751817666566"
+      }
+    ]
+  },
+  "description": ""
+}

@@ -1,5 +1,7 @@
 """Main entry point for the block-based agentic pipeline system API server."""
 
+from typing import Dict
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,7 +36,7 @@ app.include_router(stream_router, prefix="/api")
 
 
 @app.get("/")
-async def root():
+async def root() -> Dict[str, str]:
     """Root endpoint.
 
     Returns:
@@ -43,7 +45,7 @@ async def root():
     return {"message": "Welcome to the Block Agent Pipeline API"}
 
 
-def start():
+def start() -> None:
     """Start the API server."""
     host = config.get("api.host", "0.0.0.0")
     port = config.get("api.port", 8080)

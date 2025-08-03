@@ -1,6 +1,6 @@
 """Anthropic provider for LLM integration."""
 
-from typing import Any, Callable, Dict, Optional
+from typing import Callable, Optional
 
 import anthropic
 

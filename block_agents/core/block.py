@@ -28,6 +28,7 @@ class Block(ABC):
         # Default timeout in seconds (can be overridden in config)
         self.timeout = config.get("timeout_seconds", 60)
 
+
     def execute(self, inputs: Dict[str, Any], context: Context) -> Any:
         """Execute the block with the given inputs and context.
 
